@@ -9,6 +9,11 @@ const
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 1337, () => console.log('webhook is listening'));
 
+// Default Application Response
+app.get('/', (req, res) => {
+  res.send("You Are Very Welcome! :) ");
+});
+
 // Creates the endpoint for our webhook
 app.post('/webhook', (req, res) => {
 
@@ -33,11 +38,6 @@ app.post('/webhook', (req, res) => {
     res.sendStatus(404);
   }
 
-});
-
-// Default Application Response
-app.get('/', (req, res) => {
-  res.send("You Are Very Welcome! :) ");
 });
 
 // Adds support for GET requests to our webhook
