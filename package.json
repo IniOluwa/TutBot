@@ -1,0 +1,14 @@
+{
+  "name": "tutbot",
+  "version": "1.0.0",
+  "description": "Messenger Bot Quick Start Tutorial",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "TutBot"
+  ],
+  "author": "IniOluwa",
+  "license": "ISC"
+}
