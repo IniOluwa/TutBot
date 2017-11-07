@@ -32,7 +32,7 @@ app.post('/webhook', (req, res) => {
       let webhookEvent = entry.messaging[0];
       console.log(webhookEvent);
 
-      console.log(entry.messaging[0].recipient.id);
+      console.log(entry.messaging[0].recipient);
 
     //   // Recipient's Id
     //   let recipientId = entry.messaging[1].id;
