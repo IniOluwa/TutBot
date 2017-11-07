@@ -46,7 +46,7 @@ app.post('/webhook', (req, res) => {
       };
 
       // Returns a response to the user
-      request.post('https://graph.facebook.com/v2.6/me/messages?access_token=' + process.env.PAGE_ACCESS_TOKEN, json: userResponse, (error, response, body) => {
+      request.post('https://graph.facebook.com/v2.6/me/messages?access_token=' + process.env.PAGE_ACCESS_TOKEN, (error, response, body) => {
         // If an error occured
         console.log('Error: ', error);
 
@@ -55,7 +55,7 @@ app.post('/webhook', (req, res) => {
 
         // Response Body
         console.log('Body: ', response.body);
-      });
+      }).json(userResponse);
 
     });
 
