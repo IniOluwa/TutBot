@@ -35,13 +35,16 @@ app.post('/webhook', (req, res) => {
       // Recipient's Id
       let recipientId = entry.messaging[0].sender.id;
 
+      // Recipient's Message
+      let recipientMessage = entry.messaging[0].message;
+
       // User's Response
       let userResponse = {
         'recipient': {
           'id': recipientId,
         },
         'message': {
-          'text': webhookEvent,
+          'text': message,
         }
       };
 
