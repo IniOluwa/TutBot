@@ -4,7 +4,9 @@
 const
   express = require('express'),
   bodyParser = require('body-parser'),
-  app = express().use(bodyParser.json()); // creates express http server
+  app = express().use(bodyParser.json()), // creates express http server
+  request = require('request'),
+  dotenv = require('dotenv').config();
 
 // Sets server port and logs message on success
 app.listen(process.env.PORT || 3000, () => console.log('webhook is listening'));
@@ -14,9 +16,9 @@ app.get('/', (req, res) => {
   res.send("You Are Very Welcome! :) ");
 });
 
-// Creates the endpoint for our webhook
 app.post('/webhook', (req, res) => {
 
+  // Define body
   let body = req.body;
 
   // Checks this is an event from a page subscription
@@ -29,15 +31,43 @@ app.post('/webhook', (req, res) => {
       // will only ever contain one message, so we get index 0
       let webhookEvent = entry.messaging[0];
       console.log(webhookEvent);
+
+      console.log(req.body.entry[0].messaging[0]);
+
+      // Recipient's Id
+      let recipientId = req.body.entry[0].messaging[1].id;
+
+      // User's Response
+      let userResponse = {
+        'recipient': {
+          'id': recipientId,
+        },
+        'message': {
+          'text': webhookEvent,
+        }
+      };
+
+      // Returns a response to the user
+      request.post('https://graph.facebook.com/v2.6/me/messages?access_token=' + process.env.PAGE_ACCESS_TOKEN, userResponse, (error, response, body) => {
+        // If an error occured
+        console.log('Error: ', error);
+
+        // Check response StatusCode code
+        console.log('StatusCode: ', response && response.StatusCode);
+
+        // Response Body
+        console.log('Body: ', response.body);
+      });
+
     });
 
     // Returns a '200 OK' response to all requests
     res.status(200).send('EVENT_RECEIVED');
+
   } else {
     // Returns a '404 Not Found' if event is not from a page subscription
     res.sendStatus(404);
   }
-
 });
 
 // Adds support for GET requests to our webhook
