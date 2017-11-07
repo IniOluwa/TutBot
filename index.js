@@ -34,32 +34,32 @@ app.post('/webhook', (req, res) => {
 
       console.log(req.body.entry[0].messaging[0]);
 
-      // Recipient's Id
-      let recipientId = req.body.entry[0].messaging[1].id;
-
-      // User's Response
-      let userResponse = {
-        'recipient': {
-          'id': recipientId,
-        },
-        'message': {
-          'text': webhookEvent,
-        }
-      };
-
-      // Returns a response to the user
-      request.post('https://graph.facebook.com/v2.6/me/messages?access_token=' + process.env.PAGE_ACCESS_TOKEN, userResponse, (error, response, body) => {
-        // If an error occured
-        console.log('Error: ', error);
-
-        // Check response StatusCode code
-        console.log('StatusCode: ', response && response.StatusCode);
-
-        // Response Body
-        console.log('Body: ', response.body);
-      });
-
-    });
+    //   // Recipient's Id
+    //   let recipientId = req.body.entry[0].messaging[1].id;
+    //
+    //   // User's Response
+    //   let userResponse = {
+    //     'recipient': {
+    //       'id': recipientId,
+    //     },
+    //     'message': {
+    //       'text': webhookEvent,
+    //     }
+    //   };
+    //
+    //   // Returns a response to the user
+    //   request.post('https://graph.facebook.com/v2.6/me/messages?access_token=' + process.env.PAGE_ACCESS_TOKEN, userResponse, (error, response, body) => {
+    //     // If an error occured
+    //     console.log('Error: ', error);
+    //
+    //     // Check response StatusCode code
+    //     console.log('StatusCode: ', response && response.StatusCode);
+    //
+    //     // Response Body
+    //     console.log('Body: ', response.body);
+    //   });
+    //
+    // });
 
     // Returns a '200 OK' response to all requests
     res.status(200).send('EVENT_RECEIVED');
