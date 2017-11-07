@@ -36,7 +36,7 @@ app.post('/webhook', (req, res) => {
       let recipientId = entry.messaging[0].sender.id;
 
       // Recipient's Message
-      let recipientMessage = entry.messaging[0].message;
+      let recipientMessage = entry.messaging[0].message.toString();
 
       // User's Response
       let userResponse = {
@@ -49,18 +49,6 @@ app.post('/webhook', (req, res) => {
       };
 
       // Returns a response to the user
-
-      // request.post('https://graph.facebook.com/v2.6/me/messages?access_token=' + process.env.PAGE_ACCESS_TOKEN, userResponse, (error, response, body) => {
-      //   // If an error occured
-      //   console.log('Error: ', error);
-      //
-      //   // Check response StatusCode code
-      //   console.log('StatusCode: ', response, response.StatusCode);
-      //
-      //   // Response Body
-      //   console.log('Body: ', response.body);
-      // });
-
       request({
         method: 'POST',
         uri: 'https://graph.facebook.com/v2.6/me/messages?access_token=' + process.env.PAGE_ACCESS_TOKEN,
