@@ -44,7 +44,7 @@ app.post('/webhook', (req, res) => {
           'id': recipientId,
         },
         'message': {
-          'text': 'Cool!',
+          'text': recipientMessage.toString(),
         }
       };
 
