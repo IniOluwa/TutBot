@@ -4,7 +4,8 @@
   "description": "Messenger Bot Quick Start Tutorial",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "start": "node index.js"
   },
   "keywords": [
     "TutBot"
