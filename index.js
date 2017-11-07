@@ -32,23 +32,21 @@ app.post('/webhook', (req, res) => {
       let webhookEvent = entry.messaging[0];
       console.log(webhookEvent);
 
-      console.log(entry.messaging[0].recipient);
-
       // Recipient's Id
-      let recipientId = entry.messaging[0].recipient.id;
+      let recipientId = entry.messaging[0].sender.id;
 
-      // // User's Response
-      // let userResponse = {
-      //   'recipient': {
-      //     'id': recipientId,
-      //   },
-      //   'message': {
-      //     'text': webhookEvent,
-      //   }
-      // };
+      // User's Response
+      let userResponse = {
+        'recipient': {
+          'id': recipientId,
+        },
+        'message': {
+          'text': webhookEvent,
+        }
+      };
 
       // Returns a response to the user
-      request.post('https://graph.facebook.com/v2.6/me/messages?access_token=' + process.env.PAGE_ACCESS_TOKEN, {'recipient': {'id':  entry.messaging[0].recipient.id}, 'message': {'text': webhookEvent}}, (error, response, body) => {
+      request.post('https://graph.facebook.com/v2.6/me/messages?access_token=' + process.env.PAGE_ACCESS_TOKEN, userResponse, (error, response, body) => {
         // If an error occured
         console.log('Error: ', error);
 
