@@ -36,7 +36,7 @@ app.post('/webhook', (req, res) => {
       let recipientId = entry.messaging[0].sender.id;
 
       // Recipient's Message
-      let recipientMessage = entry.messaging[0].message.toString();
+      let recipientMessage = entry.messaging[0].message.text;
 
       // User's Response
       let userResponse = {
@@ -44,7 +44,7 @@ app.post('/webhook', (req, res) => {
           'id': recipientId,
         },
         'message': {
-          'text': recipientMessage.toString(),
+          'text': recipientMessage,
         }
       };
 
