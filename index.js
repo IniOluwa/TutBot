@@ -46,18 +46,10 @@ userSchema.methods.data = () => {
 // User Model
 let User = mongoose.model('User', userSchema);
 
-// New User
-let huey = new User({ originalName: 'Huey Freeman',
-                      tuttBottGeneratedName: 'HFM',
-                      senderId: '12345',
-                      onlineStatus: true
-                    });
+// Name Generation
+let generateName = () => 'BotUser-' + Math.random().toString(36).substring(7);
 
-huey.save((err, huey) => {
-  if (err) return "User could not be saved; please try again";
-  console.log("This is a saved entry: ", huey.originalName);
-});
-
+// New User Creation Method
 let newUser = (userOriginalName, userBotGeneratedName, userSenderId, userUserLocale, userOnlineStatus) => {
   let theUser = new User({
                         originalName: userOriginalName,
