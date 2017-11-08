@@ -96,7 +96,9 @@ app.post('/webhook', (req, res) => {
       // Get & Save Available User
       newUser('User\'sFacebookName', generateName(), entry.messaging[0].sender.id, 'User\'sLocale', true);
 
-      let currentUser = User.find({ senderId:  entry.messaging[0].sender.id})
+      let currentUser =  User.findOne({ senderId:  entry.messaging[0].sender.id});
+
+      console.log(currentUser);
 
       // User's Response
       let userResponse = {
@@ -104,7 +106,7 @@ app.post('/webhook', (req, res) => {
           'id': recipientId,
         },
         'message': {
-          'text': newUser.botGeneratedName ? "Your Id For This Session Is " + newUser.botGeneratedName : currentUser,
+          'text': newUser.botGeneratedName ? "Your Id For This Session Is " + newUser.botGeneratedName : recipientMessage,
         }
       };
 
