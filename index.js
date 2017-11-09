@@ -31,6 +31,7 @@ let userSchema = mongoose.Schema({
 
 // User's Data
 userSchema.methods.data = () => {
+
   // User's Available Information
   let currentUser = {
     originalName: this.originalName ? this.originalName : "Original Name Not Available.",
@@ -51,6 +52,7 @@ let generateName = () => 'BotUser-' + Math.random().toString(36).substring(2, 7)
 
 // New User Creation Method
 let newUser = (userOriginalName, userBotGeneratedName, userSenderId, userUserLocale, userOnlineStatus) => {
+
   // Define New User
   let theUser = new User({
                         originalName: userOriginalName,
@@ -75,9 +77,12 @@ app.listen(process.env.PORT || 3000, () => console.log('webhook is listening'));
 
 // Default Application Response
 app.get('/', (req, res) => {
+
+  // Welcome Message
   res.send("You Are Very Welcome! :) ");
 });
 
+// Adds support for POST requests to the webhook
 app.post('/webhook', (req, res) => {
 
   // Define body
@@ -146,7 +151,7 @@ app.post('/webhook', (req, res) => {
   }
 });
 
-// Adds support for GET requests to our webhook
+// Adds support for GET requests to the webhook
 app.get('/webhook', (req, res) => {
 
   // Your verify token. Should be a random string.
