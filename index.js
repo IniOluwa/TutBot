@@ -10,8 +10,8 @@ const
   mongoose = require('mongoose');
 
 // Database Connection
-// mongoose.connect(process.env.MONGODB_URI);
-mongoose.connect('localhost/test');
+mongoose.connect(process.env.MONGODB_URI);
+// mongoose.connect('localhost/test');
 let db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error: '));
