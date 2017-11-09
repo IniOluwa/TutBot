@@ -121,7 +121,7 @@ app.post('/webhook', (req, res) => {
           'id': recipientId,
         },
         'message': {
-          'text': currentUser ? "Your Id For This Session Is " + currentUser : recipientMessage,
+          'text': currentUser ? "Your Id For This Session Is " + currentUser[0] : recipientMessage,
         }
       };
 
