@@ -47,7 +47,7 @@ userSchema.methods.data = () => {
 let User = mongoose.model('User', userSchema);
 
 // Name Generation
-let generateName = () => 'BotUser-' + Math.random().toString(36).substring(2, 5);
+let generateName = () => 'BotUser-' + Math.random().toString(36).substring(2, 7);
 
 // New User Creation Method
 let newUser = (userOriginalName, userBotGeneratedName, userSenderId, userUserLocale, userOnlineStatus) => {
