@@ -14,7 +14,10 @@ mongoose.connect(process.env.MONGODB_URI);
 // mongoose.connect('localhost/test');
 let db = mongoose.connection;
 
+// Database Error Case
 db.on('error', console.error.bind(console, 'connection error: '));
+
+// Database Opened Console
 db.once('open', () => {
   // Connection Established...
   console.log('Database Connected!');
