@@ -103,7 +103,7 @@ app.post('/webhook', (req, res) => {
       // Get & Save Available User
       newUser('User\'sFacebookName', generateName(), entry.messaging[0].sender.id, 'User\'sLocale', true);
 
-      let currentUser =  {};
+      let currentUser =  [];
 
       User.findOne({ senderId:  entry.messaging[0].sender.id }, 'senderId', (error, results) => {
         // If error
