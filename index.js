@@ -10,7 +10,8 @@ const
   mongoose = require('mongoose');
 
 // Database Connection
-mongoose.connect(process.env.MONGODB_URI);
+// mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect('localhost/test');
 let db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error: '));
@@ -50,6 +51,7 @@ let generateName = () => 'BotUser-' + Math.random().toString(36).substring(7);
 
 // New User Creation Method
 let newUser = (userOriginalName, userBotGeneratedName, userSenderId, userUserLocale, userOnlineStatus) => {
+  // Define New User
   let theUser = new User({
                         originalName: userOriginalName,
                         botGeneratedName: userBotGeneratedName,
@@ -57,9 +59,14 @@ let newUser = (userOriginalName, userBotGeneratedName, userSenderId, userUserLoc
                         userLocale: userUserLocale,
                         onlineStatus: userOnlineStatus
                     });
+
+  // Save New User
   theUser.save((err, theUser) => {
+    // If Error
     if (err) return "User could not be saved; please try again";
-    console.log(theUser);
+
+    // Return User
+    return theUser;
   });
 };
 
@@ -96,7 +103,15 @@ app.post('/webhook', (req, res) => {
       // Get & Save Available User
       newUser('User\'sFacebookName', generateName(), entry.messaging[0].sender.id, 'User\'sLocale', true);
 
-      let currentUser =  User.findOne({ senderId:  entry.messaging[0].sender.id});
+      let currentUser =  {};
+
+      User.findOne({ senderId:  entry.messaging[0].sender.id }, 'senderId', (error, results) => {
+        // If error
+        if (error) return error;
+
+        // Push Results To Array
+        currentUser.push(results);
+      });
 
       console.log(currentUser);
 
@@ -106,7 +121,7 @@ app.post('/webhook', (req, res) => {
           'id': recipientId,
         },
         'message': {
-          'text': newUser.botGeneratedName ? "Your Id For This Session Is " + newUser.botGeneratedName : recipientMessage,
+          'text': currentUser ? "Your Id For This Session Is " + currentUser : recipientMessage,
         }
       };
 
