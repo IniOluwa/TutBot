@@ -114,7 +114,7 @@ app.post('/webhook', (req, res) => {
             'id': recipientId,
           },
           'message': {
-            'text': results ? "Your Id For This Session Is: " + results.botGeneratedName : recipientMessage,
+            'text': results ? "Welcome " + results.botGeneratedName : recipientMessage,
           }
         };
 
