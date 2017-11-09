@@ -104,7 +104,7 @@ app.post('/webhook', (req, res) => {
       newUser('User\'sFacebookName', generateName(), entry.messaging[0].sender.id, 'User\'sLocale', true);
 
       // Get Current User Information & Respond To User
-      User.findOne({ senderId:  entry.messaging[0].sender.id }, 'senderId', (error, results) => {
+      User.findOne({ senderId:  entry.messaging[0].sender.id }, 'botGeneratedName', (error, results) => {
         // If error
         if (error) return error;
 
@@ -114,7 +114,7 @@ app.post('/webhook', (req, res) => {
             'id': recipientId,
           },
           'message': {
-            'text': results ? "Your Id For This Session Is " + results : recipientMessage,
+            'text': results ? "Your Id For This Session Is: " + results : recipientMessage,
           }
         };
 
