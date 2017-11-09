@@ -103,45 +103,38 @@ app.post('/webhook', (req, res) => {
       // Get & Save Available User
       newUser('User\'sFacebookName', generateName(), entry.messaging[0].sender.id, 'User\'sLocale', true);
 
-      let currentUser =  [];
-
+      // Get Current User Information & Respond To User
       User.findOne({ senderId:  entry.messaging[0].sender.id }, 'senderId', (error, results) => {
         // If error
         if (error) return error;
 
-        // Push Results To Array
-        currentUser.push(results);
+        // User's Response
+        let userResponse = {
+          'recipient': {
+            'id': recipientId,
+          },
+          'message': {
+            'text': results ? "Your Id For This Session Is " + results : recipientMessage,
+          }
+        };
+
+        // Returns a response to the user
+        request({
+          method: 'POST',
+          uri: 'https://graph.facebook.com/v2.6/me/messages?access_token=' + process.env.PAGE_ACCESS_TOKEN,
+          json: userResponse
+        }, (error, response, body) => {
+          // If an error occured
+          console.log('Error: ', error);
+
+          // Check response StatusCode code
+          console.log('StatusCode: ', response, response.StatusCode);
+
+          // Response Body
+          console.log('Body: ', response.body);
+        });
+
       });
-
-      console.log(currentUser);
-
-      // User's Response
-      let userResponse = {
-        'recipient': {
-          'id': recipientId,
-        },
-        'message': {
-          'text': currentUser ? "Your Id For This Session Is " + currentUser[0] : recipientMessage,
-        }
-      };
-
-
-      // Returns a response to the user
-      request({
-        method: 'POST',
-        uri: 'https://graph.facebook.com/v2.6/me/messages?access_token=' + process.env.PAGE_ACCESS_TOKEN,
-        json: userResponse
-      }, (error, response, body) => {
-        // If an error occured
-        console.log('Error: ', error);
-
-        // Check response StatusCode code
-        console.log('StatusCode: ', response, response.StatusCode);
-
-        // Response Body
-        console.log('Body: ', response.body);
-      });
-
     });
 
     // Returns a '200 OK' response to all requests
